@@ -1,5 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
+/* allow dwm to read special keys on a keyboard */
+#include <X11/XF86keysym.h>
+
 /* constants */
 #define TERMINAL "kitty"
 
@@ -79,11 +82,15 @@ static Key keys[] = {
 	{ MODKEY,	                XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,	                XK_l,	   spawn,          SHCMD("slock") },
 	{ MODKEY|ShiftMask,	        XK_d, 	   spawn,          SHCMD("chromium --app=https://discord.com/app") },
+	{ MODKEY|ShiftMask,	        XK_s, 	   spawn,          SHCMD("maim -s --format png /dev/stdout | xclip -selection clipboard -t image/png -i") },
 	{ MODKEY,                       XK_w,      spawn,      	   SHCMD("$BROWSER") },
 	{ MODKEY,                       XK_m,      spawn,      	   SHCMD(TERMINAL " -e ncmpcpp") },
 	{ MODKEY,                       XK_p,      spawn,      	   SHCMD("mpc toggle") },
 	{ MODKEY,                       XK_comma,  spawn,      	   SHCMD("mpc prev") },
 	{ MODKEY,                       XK_period, spawn,      	   SHCMD("mpc next") },
+	{ MODKEY,                       XK_Up, spawn,      	   SHCMD("pactl set-sink-volume 0 +5%") },
+	{ MODKEY,                       XK_Down, spawn,      	   SHCMD("pactl set-sink-volume 0 -5%") },
+	{ MODKEY|ShiftMask,             XK_m, spawn,      	   SHCMD("pactl set-sink-mute 0 toggle") },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -96,8 +103,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,	        XK_x,      spawn,     	   SHCMD("xkill") },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY|ShiftMask,             XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,	                XK_f,      togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
