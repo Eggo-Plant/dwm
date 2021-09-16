@@ -42,5 +42,5 @@ while true; do
       sleep 1m
    fi
    export first=1
-done
+done &
 ```
